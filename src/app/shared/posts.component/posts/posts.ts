@@ -17,12 +17,26 @@ export class Posts {
 
   // onePost = @input<any>();
   // @Input() onePost = []
+  isLiked = signal<boolean>(false);
+  likesCount = signal<number>(0);
   postDeleted = output<string>();
   private readonly postService: PostService = inject(PostService);
   onePost = input<PostInterface>({} as PostInterface);
   private readonly authService: Auth = inject(Auth);
 
   //hiden drop dawon put if is me is show
+  ngOnInit(): void {
+    const post = this.onePost();
+
+    // Set likes count
+    this.likesCount.set(post.likesCount ?? 0);
+
+    // Get current user ID
+    const currentUserId = this.authService.userData()._id;
+
+    // Check if current user liked this post
+    this.isLiked.set(post.likes?.includes(currentUserId) ?? false);
+  }
   sameUser() {
     return this.authService.userData()._id == this.onePost().user._id ? true : false;
     // this.authService.userData()._id;
@@ -52,5 +66,24 @@ export class Posts {
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
+  }
+  toggleLike(): void {
+    const postId = this.onePost()._id;
+
+    this.postService.likePost(postId).subscribe({
+      next: (res) => {
+        console.log('Like Response:', res);
+
+        // Update like status
+        this.isLiked.set(res.data.liked);
+
+        // Update likes count
+        this.likesCount.set(res.data.likesCount);
+      },
+
+      error: (err) => {
+        console.log('Like API Error:', err);
+      },
+    });
   }
 }

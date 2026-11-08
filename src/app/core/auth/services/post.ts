@@ -25,4 +25,7 @@ export class Post {
   getSinglePost(postId: string): Observable<any> {
     return this.httpClient.get(`${environment.baseURL}/posts/${postId}`, {});
   }
+  likePost(postId: string): Observable<any> {
+    return this.httpClient.put(`${environment.baseURL}/posts/${postId}/like`, {});
+  }
 }

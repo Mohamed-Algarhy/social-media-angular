@@ -144,7 +144,7 @@
             ></path>
             <path d="M7 10v12"></path></svg></span
         ><button type="button" class="font-semibold transition cursor-default">
-          {{ onePost().likesCount }} likes
+          {{ likesCount() }} likes
         </button>
       </div>
       <div class="flex flex-wrap items-center gap-2 text-xs sm:gap-3 sm:text-sm">
@@ -182,9 +182,15 @@
   <div class="mx-4 border-t border-slate-200"></div>
 
   <div class="px-4 py-2 flex justify-around text-gray-600 text-sm">
-    <button class="cursor-pointer flex items-center gap-2 hover:text-blue-600">
-      <i class="fa-regular fa-thumbs-up"></i>
-      Like
+    <button
+      type="button"
+      (click)="toggleLike()"
+      class="cursor-pointer flex items-center gap-2 hover:text-blue-600"
+      [class.text-blue-600]="isLiked()"
+    >
+      <i class="fa-thumbs-up" [class.fa-solid]="isLiked()" [class.fa-regular]="!isLiked()"></i>
+
+      {{ isLiked() ? 'Unlike' : 'Like' }}
     </button>
     <button class="cursor-pointer flex items-center gap-2 hover:text-blue-600">
       <i class="fa-regular fa-comment"></i>
