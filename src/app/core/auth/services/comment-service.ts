@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
- import { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -9,17 +9,27 @@ import { environment } from '../../../../environments/environment';
 export class CommentService {
   private readonly httpClient = inject(HttpClient);
 
-  getPostComments(postId: string , limit:number): Observable<any> {
-    // بناء الـ URL بناءً على ما هو موجود في Postman
-    const url = `${environment.baseURL}/posts/${postId}/comments?page=1&limit=10`;
+  getPostComments(postId: string, limit: number = 10): Observable<any> {
+    return this.httpClient.get(
+      `${environment.baseURL}/posts/${postId}/comments?page=1&limit=${limit}`,
+    );
+  }
 
-    // إرسال التوكن في الهيدر (مع التأكد من المفتاح المخزن في الـ localStorage لديك، سواء 'token' أو 'usertoken')
-    const headers = new HttpHeaders({
-      token: localStorage.getItem('usertoken') || '',
-      // أو إذا كان الـ API يتطلب Authorization Bearer:
-      // 'Authorization': `Bearer ${localStorage.getItem('usertoken')}`
-    });
+  // createComment(postId: string, content: string): Observable<any> {
+  //   return this.httpClient.post(`${environment.baseURL}/comments`, {
+  //     comment: content,
+  //     post: postId,
+  //   });
+  // }
+  createComment(postId: string, content: string): Observable<any> {
+    const formData = new FormData();
 
-    return this.httpClient.get(url, { headers });
+    formData.append('content', content);
+
+    return this.httpClient.post(`${environment.baseURL}/posts/${postId}/comments`, formData);
+  }
+
+  deleteComment(commentId: string): Observable<any> {
+    return this.httpClient.delete(`${environment.baseURL}/comments/${commentId}`);
   }
 }

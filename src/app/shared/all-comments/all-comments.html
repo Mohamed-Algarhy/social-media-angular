@@ -35,7 +35,7 @@
       <div class="flex items-center gap-2 font-semibold text-gray-700">
           <span>Comments</span>
           <span class="bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded-full">
-              1
+              {{ allComments().length }}
           </span>
       </div>
       
@@ -44,10 +44,42 @@
           <i class="fa-solid fa-chevron-down text-xs"></i>
       </button>
   </div>
-  
+
+  @if (errorMessage()) {
+    <p class="mb-3 text-sm text-red-600">{{ errorMessage() }}</p>
+  }
+
+  <form class="mb-4 flex items-start gap-3" (submit)="createComment(); $event.preventDefault()">
+    <div class="w-10 h-10 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden">
+      <img
+        class="w-full h-full object-cover"
+        [src]="authService.userData().photo || '/images/default-profile.png'"
+        [alt]="authService.userData().name || 'User'"
+      />
+    </div>
+    <div class="flex-1 flex gap-2">
+      <input
+        type="text"
+        name="comment"
+        [value]="commentText()"
+        (input)="commentText.set($any($event.target).value)"
+        [disabled]="isSubmitting()"
+        maxlength="500"
+        placeholder="Write a comment..."
+        class="w-full rounded-full border border-gray-300 px-4 py-2 text-sm outline-none focus:border-blue-500"
+      />
+      <button
+        type="submit"
+        [disabled]="!commentText().trim() || isSubmitting()"
+        class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white disabled:bg-gray-300"
+      >
+        {{ isSubmitting() ? 'Posting...' : 'Post' }}
+      </button>
+    </div>
+  </form>
   
 @for (oneComment of allComments(); track oneComment._id) {
-<div class="bg-white rounded-2xl border border-gray-200 p-4">
+<div class="bg-white rounded-2xl border border-gray-200 p-4 mb-3">
     
     <!-- Comment -->
     <div class="flex gap-3">
@@ -55,7 +87,11 @@
         <!-- Avatar -->
         <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
             <!-- <i class="fa-solid fa-user text-gray-400"></i> -->
-             <img [src]="oneComment.commentCreator.photo" alt="">
+             <img
+               class="w-full h-full rounded-full object-cover"
+               [src]="oneComment.commentCreator.photo || '/images/default-profile.png'"
+               [alt]="oneComment.commentCreator.name || 'User'"
+             />
         </div>
 
         <!-- Comment Content -->
@@ -87,9 +123,16 @@
                     Reply
                 </button>
                 
-                <button class="ml-auto text-gray-400 hover:text-gray-600">
-                    <i class="fa-solid fa-ellipsis"></i>
-                </button>
+                @if (isCommentOwner(oneComment)) {
+                  <button
+                    type="button"
+                    (click)="deleteComment(oneComment._id)"
+                    class="ml-auto text-red-500 hover:text-red-700"
+                    aria-label="Delete comment"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                }
             </div>
             
         </div>
