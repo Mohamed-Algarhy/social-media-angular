@@ -1,48 +1,48 @@
-<nav class="bg-white border-b border-gray-100 px-4 py-3 sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto flex items-center justify-between">
+<nav class="sticky top-0 z-50 border-b border-gray-100 bg-white px-3 py-2 sm:px-4 sm:py-3">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-2">
     
     <!-- Left Section: Logo & Brand Name -->
     <a routerLink="/" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-      <span class="self-center text-xl font-bold whitespace-nowrap text-gray-900">
+      <span class="hidden self-center text-base font-bold whitespace-nowrap text-gray-900 sm:block md:text-xl">
         Route Posts
       </span>
     </a>
 
     <!-- Center Section: Navigation Pills/Tabs -->
-    <div class="flex items-center bg-gray-100/80 p-1.5 rounded-2xl space-x-1 shadow-inner">
+    <div class="flex items-center rounded-2xl bg-gray-100/80 p-1 shadow-inner sm:space-x-1 sm:p-1.5">
       
       <!-- Feed Tab -->
       <a 
         routerLink="/feed" 
         routerLinkActive="bg-white text-gray-900 shadow-sm font-semibold" 
-        class="flex items-center space-x-2 px-5 py-2 rounded-xl text-gray-600 hover:text-gray-900 transition-all text-sm">
+        class="flex items-center gap-1 rounded-xl px-2 py-2 text-sm text-gray-600 transition-all hover:text-gray-900 sm:space-x-2 sm:px-3 md:px-5">
         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
           <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l1.293 1.293a1 1 0 0 0 1.414-1.414Z"/>
         </svg>
-        <span>Feed</span>
+        <span class="hidden md:inline">Feed</span>
       </a>
 
       <!-- Profile Tab -->
       <a 
         routerLink="/profile" 
         routerLinkActive="bg-white text-gray-900 shadow-sm font-semibold" 
-        class="flex items-center space-x-2 px-5 py-2 rounded-xl text-gray-600 hover:text-gray-900 transition-all text-sm">
+        class="flex items-center gap-1 rounded-xl px-2 py-2 text-sm text-gray-600 transition-all hover:text-gray-900 sm:space-x-2 sm:px-3 md:px-5">
         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
-        <span>Profile</span>
+        <span class="hidden md:inline">Profile</span>
       </a>
 
       <!-- Notifications Tab -->
       <a 
         routerLink="/notifications" 
         routerLinkActive="bg-white text-gray-900 shadow-sm font-semibold" 
-        class="relative flex items-center space-x-2 px-5 py-2 rounded-xl text-gray-600 hover:text-gray-900 transition-all text-sm">
+        class="relative flex items-center gap-1 rounded-xl px-2 py-2 text-sm text-gray-600 transition-all hover:text-gray-900 sm:space-x-2 sm:px-3 md:px-5">
         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
         </svg>
-        <span>Notifications</span>
+        <span class="hidden md:inline">Notifications</span>
         <!-- Notification Badge -->
         <span class="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-500 rounded-full">
           11
@@ -74,7 +74,6 @@
           <!-- <li>
            <span>user name</span>
           </li> -->
-          < 
           <li>
             <button (click)="logout()" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Sign out</button>
           </li>

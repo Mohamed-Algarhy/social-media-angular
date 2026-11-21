@@ -31,7 +31,7 @@
 </div>
   -->
   <!-- Header -->
-  <div class="flex items-center justify-between mb-4">
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2 font-semibold text-gray-700">
           <span>Comments</span>
           <span class="bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded-full">
@@ -49,7 +49,7 @@
     <p class="mb-3 text-sm text-red-600">{{ errorMessage() }}</p>
   }
 
-  <form class="mb-4 flex items-start gap-3" (submit)="createComment(); $event.preventDefault()">
+  <form class="mb-4 flex items-start gap-2 sm:gap-3" (submit)="createComment(); $event.preventDefault()">
     <div class="w-10 h-10 rounded-full bg-gray-200 flex-shrink-0 overflow-hidden">
       <img
         class="w-full h-full object-cover"

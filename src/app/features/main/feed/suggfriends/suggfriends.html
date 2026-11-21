@@ -14,7 +14,7 @@
       <!-- Friend Item -->
       <div class="space-y-3">
         @for (friend of allFrindes() | serchFollwoers: myWords; track friend) {
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 bg-gray-300 rounded-full">
                 <img [src]="friend.photo" alt="" />

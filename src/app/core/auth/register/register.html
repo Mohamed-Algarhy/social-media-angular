@@ -1,519 +1,126 @@
-<!-- 
-<form (ngSubmit)="test()" [formGroup]="FormRegister"> 
-<label for="">name</label>
-<input formControlName="myName" type="text">
-<br>
-<label for="">uname</label>
-<input formControlName="username" type="text">
-<br>
-<label for="">userEmail</label>
-<input formControlName="email" type="text">
-<br>
-<label for="">dateofbirht</label>
-<input formControlName="dateOfBurht" type="text">
-<br>
-<label for="">gender</label>
-<input formControlName="gender" type="text">
-<br>
-<label for="">password</label>
-<input formControlName="password" type="text">
-<br>
-<label for="">rPeassword</label>
-<input formControlName="rePassword" type="text">
-<br>
-
- <button type="submit">register</button>
-
-</form> -->
-
-<div class="min-h-screen bg-slate-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-xl w-full bg-white rounded-2xl shadow-xl p-8 border border-slate-100">
-    <!-- Header Title -->
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Create an Account</h2>
-      <p class="text-sm text-slate-500 mt-2">Please fill in the form below to register</p>
-    </div>
-
-    <!-- Error Alert Banner -->
-    @if (MessageErr()) {
-      <div
-        class="mb-6 p-4 text-sm text-red-700 bg-red-100 rounded-xl border border-red-200 flex items-center shadow-sm"
-      >
-        <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-          />
-        </svg>
-        <span class="font-medium">{{ MessageErr() }}</span>
+<main class="auth-page">
+  <section class="auth-shell register-shell">
+    <aside class="auth-showcase">
+      <a class="auth-brand" routerLink="/feed" aria-label="Home">
+        <span class="brand-mark">S</span>
+        <span>Socially</span>
+      </a>
+      <div class="showcase-copy">
+        <span class="showcase-kicker">Join the community</span>
+        <h1>Your people are already here.</h1>
+        <p>Create your profile and start sharing moments, ideas, and conversations.</p>
       </div>
-    }
+      <div class="showcase-orbit" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+    </aside>
 
-    <form action="" [formGroup]="FormRegister" (ngSubmit)="submitRegister()" class="space-y-5">
-      <!-- =========================== Name ==================================== -->
-      <div>
-        <label for="name" class="block mb-2 text-sm font-semibold text-slate-700">Name</label>
-        <div class="flex rounded-lg shadow-sm">
-          <span
-            class="inline-flex items-center px-3.5 text-slate-500 bg-slate-100 border border-r-0 border-slate-300 rounded-l-lg text-sm"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-          </span>
-          <input
-            formControlName="name"
-            type="text"
-            id="name"
-            class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 placeholder:text-slate-400"
-            placeholder="Enter your name"
-          />
+    <section class="auth-card">
+      <div class="auth-heading">
+        <span class="auth-eyebrow">Create account</span>
+        <h2>Join Socially</h2>
+        <p>Fill in your details to get started.</p>
+      </div>
+
+      @if (MessageErr()) {
+        <div class="auth-alert" role="alert">{{ MessageErr() }}</div>
+      }
+
+      <form [formGroup]="FormRegister" (ngSubmit)="submitRegister()" class="auth-form register-form">
+        <div class="field-grid">
+          <div class="field-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName="name" placeholder="Your name" />
+            @if (FormRegister.get('name')?.errors && (FormRegister.get('name')?.touched || FormRegister.get('name')?.dirty)) {
+              <div class="field-error" role="alert">
+                @if (FormRegister.get('name')?.errors?.['required']) { Name is required }
+                @else if (FormRegister.get('name')?.errors?.['minlength']) { At least 3 characters are required }
+                @else if (FormRegister.get('name')?.errors?.['maxlength']) { Maximum length is 30 characters }
+                @else if (FormRegister.get('name')?.errors?.['pattern']) { Invalid name format }
+              </div>
+            }
+          </div>
+
+          <div class="field-group">
+            <label for="username">Last name</label>
+            <input type="text" id="username" formControlName="username" placeholder="Your last name" />
+            @if (FormRegister.get('username')?.errors && (FormRegister.get('username')?.touched || FormRegister.get('username')?.dirty)) {
+              <div class="field-error" role="alert">
+                @if (FormRegister.get('username')?.errors?.['required']) { User name is required }
+                @else if (FormRegister.get('username')?.errors?.['minlength']) { At least 3 characters are required }
+                @else if (FormRegister.get('username')?.errors?.['maxlength']) { Maximum length is 30 characters }
+              </div>
+            }
+          </div>
+
+          <div class="field-group field-span">
+            <label for="email">Email address</label>
+            <input type="email" id="email" formControlName="email" placeholder="name@example.com" />
+            @if (FormRegister.get('email')?.errors && (FormRegister.get('email')?.touched || FormRegister.get('email')?.dirty)) {
+              <div class="field-error" role="alert">
+                @if (FormRegister.get('email')?.errors?.['required']) { Email is required }
+                @else if (FormRegister.get('email')?.errors?.['email']) { Invalid email format }
+              </div>
+            }
+          </div>
+
+          <div class="field-group">
+            <label for="dateOfBirth">Date of birth</label>
+            <input type="text" id="dateOfBirth" formControlName="dateOfBirth" placeholder="YYYY-MM-DD" />
+            @if (FormRegister.get('dateOfBirth')?.errors && (FormRegister.get('dateOfBirth')?.touched || FormRegister.get('dateOfBirth')?.dirty)) {
+              <div class="field-error" role="alert">
+                @if (FormRegister.get('dateOfBirth')?.errors?.['required']) { Date of birth is required }
+              </div>
+            }
+          </div>
+
+          <div class="field-group">
+            <label for="gender">Gender</label>
+            <select id="gender" formControlName="gender">
+              <option value=" ">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            @if (FormRegister.get('gender')?.errors && (FormRegister.get('gender')?.touched || FormRegister.get('gender')?.dirty)) {
+              <div class="field-error" role="alert">
+                @if (FormRegister.get('gender')?.errors?.['required']) { Gender is required }
+                @if (FormRegister.get('gender')?.errors?.['pattern']) { Invalid gender format }
+              </div>
+            }
+          </div>
+
+          <div class="field-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" formControlName="password" placeholder="Create a password" />
+            @if (FormRegister.get('password')?.errors && (FormRegister.get('password')?.touched || FormRegister.get('password')?.dirty)) {
+              <div class="field-error" role="alert">
+                @if (FormRegister.get('password')?.errors?.['required']) { Password is required }
+              </div>
+            }
+          </div>
+
+          <div class="field-group">
+            <label for="rePassword">Confirm password</label>
+            <input type="password" id="rePassword" formControlName="rePassword" placeholder="Repeat password" />
+            @if (FormRegister.get('rePassword')?.errors && (FormRegister.get('rePassword')?.touched || FormRegister.get('rePassword')?.dirty)) {
+              <div class="field-error" role="alert">
+                @if (FormRegister.get('rePassword')?.errors?.['required']) { Password confirmation is required }
+                @if (FormRegister.get('rePassword')?.errors?.['misMatched']) { Passwords do not match }
+              </div>
+            }
+          </div>
         </div>
 
-        @if (
-          FormRegister.get('name')?.errors &&
-          (FormRegister.get('name')?.touched || FormRegister.get('name')?.dirty)
-        ) {
-          <div
-            class="mt-2 flex p-3 text-xs text-red-700 bg-red-50 rounded-lg border border-red-200"
-            role="alert"
-          >
-            <svg
-              class="w-4 h-4 mr-2 shrink-0 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <div>
-              <span class="font-semibold">Ensure that these requirements are met:</span>
-              <ul class="mt-1 list-disc list-inside space-y-0.5">
-                @if (FormRegister.get('name')?.errors?.['required']) {
-                  <li>Name is required</li>
-                } @else if (FormRegister.get('name')?.errors?.['minlength']) {
-                  <li>At least 3 characters are required</li>
-                } @else if (FormRegister.get('name')?.errors?.['maxlength']) {
-                  <li>Maximum length is 30 characters</li>
-                } @else if (FormRegister.get('name')?.errors?.['pattern']) {
-                  <li>Invalid name format</li>
-                }
-              </ul>
-            </div>
-          </div>
-        }
-      </div>
-
-      <!-- =========================== LastName (username) ==================================== -->
-      <div>
-        <label for="username" class="block mb-2 text-sm font-semibold text-slate-700"
-          >LastName</label
-        >
-        <div class="flex rounded-lg shadow-sm">
-          <span
-            class="inline-flex items-center px-3.5 text-slate-500 bg-slate-100 border border-r-0 border-slate-300 rounded-l-lg text-sm"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-          </span>
-          <input
-            type="text"
-            formControlName="username"
-            id="username"
-            class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 placeholder:text-slate-400"
-            placeholder="Enter your last name"
-          />
-        </div>
-
-        @if (
-          FormRegister.get('username')?.errors &&
-          (FormRegister.get('username')?.touched || FormRegister.get('username')?.dirty)
-        ) {
-          <div
-            class="mt-2 flex p-3 text-xs text-red-700 bg-red-50 rounded-lg border border-red-200"
-            role="alert"
-          >
-            <svg
-              class="w-4 h-4 mr-2 shrink-0 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <div>
-              <span class="font-semibold">Ensure that these requirements are met:</span>
-              <ul class="mt-1 list-disc list-inside space-y-0.5">
-                @if (FormRegister.get('username')?.errors?.['required']) {
-                  <li>User Name is required</li>
-                } @else if (FormRegister.get('username')?.errors?.['minlength']) {
-                  <li>At least 3 characters are required</li>
-                } @else if (FormRegister.get('username')?.errors?.['maxlength']) {
-                  <li>Maximum length is 30 characters</li>
-                }
-              </ul>
-            </div>
-          </div>
-        }
-      </div>
-
-      <!-- =========================== email ==================================== -->
-      <div>
-        <label for="email" class="block mb-2 text-sm font-semibold text-slate-700">Email</label>
-        <div class="flex rounded-lg shadow-sm">
-          <span
-            class="inline-flex items-center px-3.5 text-slate-500 bg-slate-100 border border-r-0 border-slate-300 rounded-l-lg text-sm"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-          </span>
-          <input
-            type="email"
-            id="email"
-            formControlName="email"
-            class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 placeholder:text-slate-400"
-            placeholder="name@example.com"
-          />
-        </div>
-
-        @if (
-          FormRegister.get('email')?.errors &&
-          (FormRegister.get('email')?.touched || FormRegister.get('email')?.dirty)
-        ) {
-          <div
-            class="mt-2 flex p-3 text-xs text-red-700 bg-red-50 rounded-lg border border-red-200"
-            role="alert"
-          >
-            <svg
-              class="w-4 h-4 mr-2 shrink-0 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <div>
-              <span class="font-semibold">Ensure that these requirements are met:</span>
-              <ul class="mt-1 list-disc list-inside space-y-0.5">
-                @if (FormRegister.get('email')?.errors?.['required']) {
-                  <li>User email is required</li>
-                } @else if (FormRegister.get('email')?.errors?.['email']) {
-                  <li>Format this email not accept</li>
-                }
-              </ul>
-            </div>
-          </div>
-        }
-      </div>
-
-      <!-- =========================== DateOfBirth ==================================== -->
-      <div>
-        <label for="dateOfBirth" class="block mb-2 text-sm font-semibold text-slate-700"
-          >Date Of Birth</label
-        >
-        <div class="flex rounded-lg shadow-sm">
-          <span
-            class="inline-flex items-center px-3.5 text-slate-500 bg-slate-100 border border-r-0 border-slate-300 rounded-l-lg text-sm"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-          </span>
-          <input
-            type="text"
-            id="dateOfBirth"
-            formControlName="dateOfBirth"
-            class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 placeholder:text-slate-400"
-            placeholder="YYYY-MM-DD"
-          />
-        </div>
-
-        @if (
-          FormRegister.get('dateOfBirth')?.errors &&
-          (FormRegister.get('dateOfBirth')?.touched || FormRegister.get('dateOfBirth')?.dirty)
-        ) {
-          <div
-            class="mt-2 flex p-3 text-xs text-red-700 bg-red-50 rounded-lg border border-red-200"
-            role="alert"
-          >
-            <svg
-              class="w-4 h-4 mr-2 shrink-0 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <div>
-              <span class="font-semibold">Ensure that these requirements are met:</span>
-              <ul class="mt-1 list-disc list-inside space-y-0.5">
-                @if (FormRegister.get('dateOfBirth')?.errors?.['required']) {
-                  <li>Date Of birth is required</li>
-                }
-              </ul>
-            </div>
-          </div>
-        }
-      </div>
-
-      <!-- =========================== Gender ==================================== -->
-      <div>
-        <label for="countries" class="block mb-2 text-sm font-semibold text-slate-700"
-          >Select Gender</label
-        >
-        <select
-          formControlName="gender"
-          id="countries"
-          class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200"
-        >
-          <option value=" ">Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-
-        @if (
-          FormRegister.get('gender')?.errors &&
-          (FormRegister.get('gender')?.touched || FormRegister.get('gender')?.dirty)
-        ) {
-          <div
-            class="mt-2 flex p-3 text-xs text-red-700 bg-red-50 rounded-lg border border-red-200"
-            role="alert"
-          >
-            <svg
-              class="w-4 h-4 mr-2 shrink-0 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <div>
-              <span class="font-semibold">Ensure that these requirements are met:</span>
-              <ul class="mt-1 list-disc list-inside space-y-0.5">
-                @if (FormRegister.get('gender')?.errors?.['required']) {
-                  <li>User gender is required</li>
-                }
-                @if (FormRegister.get('gender')?.errors?.['pattern']) {
-                  <li>Format is not match</li>
-                }
-              </ul>
-            </div>
-          </div>
-        }
-      </div>
-
-      <!-- =========================== password ==================================== -->
-      <div>
-        <label for="password" class="block mb-2 text-sm font-semibold text-slate-700"
-          >Password</label
-        >
-        <div class="flex rounded-lg shadow-sm relative">
-          <span
-            class="inline-flex items-center px-3.5 text-slate-500 bg-slate-100 border border-r-0 border-slate-300 rounded-l-lg text-sm"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              />
-            </svg>
-          </span>
-          <input
-            type="password"
-            formControlName="password"
-            id="password"
-            class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 placeholder:text-slate-400"
-            placeholder="••••••••"
-          />
-        </div>
-
-        @if (
-          FormRegister.get('password')?.errors &&
-          (FormRegister.get('password')?.touched || FormRegister.get('password')?.dirty)
-        ) {
-          <div
-            class="mt-2 flex p-3 text-xs text-red-700 bg-red-50 rounded-lg border border-red-200"
-            role="alert"
-          >
-            <svg
-              class="w-4 h-4 mr-2 shrink-0 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <div>
-              <span class="font-semibold">Ensure that these requirements are met:</span>
-              <ul class="mt-1 list-disc list-inside space-y-0.5">
-                @if (FormRegister.get('password')?.errors?.['required']) {
-                  <li>Pass is required</li>
-                }
-              </ul>
-            </div>
-          </div>
-        }
-      </div>
-
-      <!-- =========================== repassword ==================================== -->
-      <div>
-        <label for="rePassword" class="block mb-2 text-sm font-semibold text-slate-700"
-          >Re-Password</label
-        >
-        <div class="flex rounded-lg shadow-sm relative">
-          <span
-            class="inline-flex items-center px-3.5 text-slate-500 bg-slate-100 border border-r-0 border-slate-300 rounded-l-lg text-sm"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              />
-            </svg>
-          </span>
-          <input
-            type="password"
-            formControlName="rePassword"
-            id="rePassword"
-            class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 placeholder:text-slate-400"
-            placeholder="••••••••"
-          />
-        </div>
-
-        @if (
-          FormRegister.get('rePassword')?.errors &&
-          (FormRegister.get('rePassword')?.touched || FormRegister.get('rePassword')?.dirty)
-        ) {
-          <div
-            class="mt-2 flex p-3 text-xs text-red-700 bg-red-50 rounded-lg border border-red-200"
-            role="alert"
-          >
-            <svg
-              class="w-4 h-4 mr-2 shrink-0 text-red-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
-            <div>
-              <span class="font-semibold">Ensure that these requirements are met:</span>
-              <ul class="mt-1 list-disc list-inside space-y-0.5">
-                @if (FormRegister.get('rePassword')?.errors?.['required']) {
-                  <li>User Password is required</li>
-                }
-                @if (FormRegister.get('rePassword')?.errors?.['misMatched']) {
-                  <li>Password and re-Password not Match</li>
-                }
-              </ul>
-            </div>
-          </div>
-        }
-      </div>
-      <div class="text-center text-sm font-medium text-slate-500">
-        Already have an account?
-        <a
-          routerLink="/login"
-          class="text-blue-600 hover:underline font-semibold hover:text-blue-700 transition duration-150"
-        >
-          Go To Sign In
-        </a>
-      </div>
-
-      <!-- Submit Button -->
-      <div class="pt-4">
-        <button
-          class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center transition duration-200 shadow-md hover:shadow-lg"
-          type="submit"
-        >
-          Register
+        <button class="auth-submit" type="submit">
+          <span>Create account</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5" /></svg>
         </button>
-      </div>
-    </form>
-  </div>
-</div>
-<!-- 
-@if (FormRegister.get('myName')?.errors && (FormRegister.get('myName')?.touched || FormRegister.get('myName')?.dirty)) {
-                    <div class="mt-2 text-sm text-red-600  ">
-                        
-                         
-                         @if (FormRegister.get('myName')?.getError('required')) {
-                          <div class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft" role="alert">
-                            <svg class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
-                            <p><span class="font-medium me-1">Danger alert!</span> اسم المستخدم مطلوب.</p>
-                        </div>
-                        }
-                        @if (FormRegister.get('myName')?.getError('minlength')) {
-                            <svg class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
-                            <p class="font-medium me-1"> Must be min 3</p>
-                        }
-                        @if (FormRegister.get('myName')?.getError('maxlength')) {
-                        <p>يجب ألا يتجاوز الاسم 30 حرفاً.</p>
-                        }
-                        @if (FormRegister.get('myName')?.getError('pattern')) {
-                        <p>الاسم يجب أن يحتوي على حروف إنجليزية وفواصل فقط.</p>
-                        } -->
--->
+      </form>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a routerLink="/login">Sign in</a>
+      </p>
+    </section>
+  </section>
+</main>

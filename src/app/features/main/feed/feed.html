@@ -1,5 +1,5 @@
-<div class="gap-2 py-5 px-30 bg-gray-200 grid grid-cols-12">
-  <div class="col-start-1 col-end-3">
+<div class="grid w-full grid-cols-1 gap-4 bg-gray-200 xl:grid-cols-12">
+  <div class="hidden xl:col-start-1 xl:col-end-3 xl:block">
     <!-- LEFT SIDEBAR -->
     <div class="lg:col-start-1 lg:col-end-4">
       <aside>
@@ -41,14 +41,14 @@
     </div>
   </div>
 
-  <div class="col-start-3 col-end-10">
+  <div class="w-full min-w-0 xl:col-start-3 xl:col-end-10">
     <app-createpost (creatPostEvent)="feedgetAllPosts($event)"></app-createpost>
     <!-- استدعِ الـ Signal كدالة وضع الـ track المناسب مثل item._id -->
     @for (onePostParent of allPosts(); track onePostParent._id) {
       <app-posts [onePost]="onePostParent" (postDeleted)="removePost($event)"></app-posts>
     }
   </div>
-  <div class="col-start-10 col-end-13">
+  <div class="hidden xl:col-start-10 xl:col-end-13 xl:block">
     <!-- right SIDEBAR -->
     <app-suggfriends></app-suggfriends>
   </div>
